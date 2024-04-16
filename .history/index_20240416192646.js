@@ -35,6 +35,7 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
 });
 
+//port
 app.listen(8000, () => {
   console.log("listening on 8000");
 });

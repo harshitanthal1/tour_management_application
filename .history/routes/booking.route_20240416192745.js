@@ -18,6 +18,7 @@ router.get("/get-currentBookings", requireSignIn, isAdmin, getCurrentBookings);
 
 router.get("/get-allBookings", requireSignIn, isAdmin, getAllBookings);
 
+//get all current bookings by user id
 router.get(
   "/get-UserCurrentBookings/:id",
   requireSignIn,

@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 
+//update uset details
 export const updateUser = async (req, res) => {
   if (req.user.id !== req.params.id) {
     return res.status(401).send({
@@ -8,6 +9,7 @@ export const updateUser = async (req, res) => {
       message: "You can only update your own account please login again!",
     });
   }
+  //   console.log(req.body.phone);
 
   try {
     const updatedUser = await User.findByIdAndUpdate(
@@ -40,6 +42,7 @@ export const updateUser = async (req, res) => {
   }
 };
 
+//update user profile photo
 export const updateProfilePhoto = async (req, res) => {
   try {
     if (req.user.id !== req.params.id) {
@@ -80,6 +83,7 @@ export const updateProfilePhoto = async (req, res) => {
   }
 };
 
+// update user password
 export const updateUserPassword = async (req, res) => {
   try {
     if (req.user.id !== req.params.id) {
@@ -130,6 +134,7 @@ export const updateUserPassword = async (req, res) => {
   }
 };
 
+//delete user
 export const deleteUserAccount = async (req, res, next) => {
   if (req.user.id !== req.params.id)
     return res.status(401).send({
@@ -138,7 +143,7 @@ export const deleteUserAccount = async (req, res, next) => {
     });
   try {
     await User.findByIdAndDelete(req.params.id);
-    res.clearCookie("access_token");
+    res.clearCookie("access_token"); //clear cookie before sending json
     res.status(200).send({
       success: true,
       message: "User account has been deleted!",
@@ -148,6 +153,7 @@ export const deleteUserAccount = async (req, res, next) => {
   }
 };
 
+//get all users admin
 export const getAllUsers = async (req, res) => {
   try {
     const searchTerm = req.query.searchTerm || "";
@@ -172,6 +178,7 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+//delete user admin
 export const deleteUserAccountAdmin = async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req?.params?.id);

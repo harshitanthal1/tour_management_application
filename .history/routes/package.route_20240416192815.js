@@ -21,6 +21,8 @@ router.get("/get-packages", getPackages);
 
 router.get("/get-package-data/:id", getPackageData);
 
+//payments routes
+//token
 router.get("/braintree/token", braintreeTokenController);
 
 export default router;

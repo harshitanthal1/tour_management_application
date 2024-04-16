@@ -2,10 +2,12 @@ import User from "../models/user.model.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 
+//test controller
 export const test = (req, res) => {
   return res.send("Hello From Test!");
 };
 
+//signup controller
 export const signupController = async (req, res) => {
   try {
     const { username, email, password, address, phone } = req.body;
@@ -49,6 +51,7 @@ export const signupController = async (req, res) => {
   }
 };
 
+//login controller
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -76,7 +79,7 @@ export const loginController = async (req, res) => {
     }
 
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
-    const { password: pass, ...rest } = validUser._doc;
+    const { password: pass, ...rest } = validUser._doc; //deselcting password to send user(this will send all data accept password)
     res.cookie("access_token", token, { httpOnly: true }).status(200).send({
       success: true,
       message: "Login Success",

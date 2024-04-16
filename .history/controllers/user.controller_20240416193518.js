@@ -148,6 +148,7 @@ export const deleteUserAccount = async (req, res, next) => {
   }
 };
 
+//get all users admin
 export const getAllUsers = async (req, res) => {
   try {
     const searchTerm = req.query.searchTerm || "";
@@ -172,6 +173,7 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+//delete user admin
 export const deleteUserAccountAdmin = async (req, res, next) => {
   try {
     await User.findByIdAndDelete(req?.params?.id);
