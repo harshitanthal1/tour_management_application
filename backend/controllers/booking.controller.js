@@ -2,6 +2,7 @@ import Booking from "../models/booking.model.js";
 import Package from "../models/package.model.js";
 import { ObjectId } from "mongodb";
 
+//book package
 export const bookPackage = async (req, res) => {
   try {
     const { packageDetails, buyer, totalPrice, persons, date } = req.body;
@@ -47,6 +48,7 @@ export const bookPackage = async (req, res) => {
   }
 };
 
+//get current bookings for admin
 export const getCurrentBookings = async (req, res) => {
   try {
     const searchTerm = req?.query?.searchTerm || "";
@@ -55,7 +57,7 @@ export const getCurrentBookings = async (req, res) => {
       status: "Booked",
     })
       .populate("packageDetails")
-
+      // .populate("buyer", "username email")
       .populate({
         path: "buyer",
         match: {
@@ -88,12 +90,13 @@ export const getCurrentBookings = async (req, res) => {
   }
 };
 
+//get all bookings admin
 export const getAllBookings = async (req, res) => {
   try {
     const searchTerm = req?.query?.searchTerm || "";
     const bookings = await Booking.find({})
       .populate("packageDetails")
-     
+      // .populate("buyer", "username email")
       .populate({
         path: "buyer",
         match: {
@@ -126,6 +129,7 @@ export const getAllBookings = async (req, res) => {
   }
 };
 
+//get current bookings for user by id
 export const getUserCurrentBookings = async (req, res) => {
   try {
     if (req?.user?.id !== req?.params?.id) {
@@ -140,7 +144,7 @@ export const getUserCurrentBookings = async (req, res) => {
       date: { $gt: new Date().toISOString() },
       status: "Booked",
     })
-      
+      // .populate("packageDetails")
       .populate({
         path: "packageDetails",
         match: {
@@ -171,7 +175,7 @@ export const getUserCurrentBookings = async (req, res) => {
   }
 };
 
-
+//get all bookings by user id
 export const getAllUserBookings = async (req, res) => {
   try {
     if (req?.user?.id !== req?.params?.id) {
@@ -184,7 +188,7 @@ export const getAllUserBookings = async (req, res) => {
     const bookings = await Booking.find({
       buyer: new ObjectId(req?.params?.id),
     })
-      
+      // .populate("packageDetails")
       .populate({
         path: "packageDetails",
         match: {
@@ -215,6 +219,7 @@ export const getAllUserBookings = async (req, res) => {
   }
 };
 
+//delete booking history
 export const deleteBookingHistory = async (req, res) => {
   try {
     if (req?.user?.id !== req?.params?.userId) {
@@ -240,6 +245,7 @@ export const deleteBookingHistory = async (req, res) => {
   }
 };
 
+//cancel booking
 export const cancelBooking = async (req, res) => {
   try {
     if (req.user.id !== req?.params?.userId) {

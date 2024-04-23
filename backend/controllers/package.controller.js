@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import Booking from "../models/booking.model.js";
 dotenv.config();
 
+//payment gateway
 var gateway = new braintree.BraintreeGateway({
   environment: braintree.Environment.Sandbox,
   merchantId: process.env.BRAINTREE_MERCHANT_ID,
@@ -11,6 +12,7 @@ var gateway = new braintree.BraintreeGateway({
   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 });
 
+//create package
 export const createPackage = async (req, res) => {
   try {
     const {
@@ -81,6 +83,7 @@ export const createPackage = async (req, res) => {
   }
 };
 
+//get all packages
 export const getPackages = async (req, res) => {
   try {
     const searchTerm = req.query.searchTerm || "";
@@ -122,6 +125,7 @@ export const getPackages = async (req, res) => {
   }
 };
 
+//get package data
 export const getPackageData = async (req, res) => {
   try {
     const packageData = await Package.findById(req?.params?.id);
@@ -140,6 +144,7 @@ export const getPackageData = async (req, res) => {
   }
 };
 
+//update package
 export const updatePackage = async (req, res) => {
   try {
     const findPackage = await Package.findById(req.params.id);
@@ -164,6 +169,7 @@ export const updatePackage = async (req, res) => {
   }
 };
 
+//delete package
 export const deletePackage = async (req, res) => {
   try {
     const deletePackage = await Package.findByIdAndDelete(req?.params?.id);
@@ -176,6 +182,8 @@ export const deletePackage = async (req, res) => {
   }
 };
 
+//payment gateway api
+//token
 export const braintreeTokenController = async (req, res) => {
   try {
     gateway.clientToken.generate({}, function (err, response) {
